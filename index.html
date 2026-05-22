@@ -8,6 +8,28 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Montserrat:wght@200;300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/@phosphor-icons/web"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    dark: '#050505',
+                    darker: '#020202',
+                    surface: '#0f0f11',
+                    gold: '#c5a059',
+                    'gold-light': '#e8ce93',
+                    'gold-dark': '#8a6e35',
+                },
+                fontFamily: {
+                    serif: ['"Playfair Display"', 'serif'],
+                    sans: ['Inter', 'sans-serif'],
+                }
+            }
+        }
+    }
+</script>
 <style>
   :root {
     --black: #050505;
@@ -567,9 +589,15 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 8rem;
-    align-items: center;
+    align-items: stretch;
   }
   .about-left .section-heading { margin-bottom: 2rem; }
+  .about-right {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   .about-description {
     font-size: 0.9rem;
     font-weight: 300;
@@ -585,16 +613,19 @@
     margin-top: 2.5rem;
     opacity: 0.8;
   }
-  .about-right {
-    position: relative;
-  }
   .about-visual {
     width: 100%;
-    aspect-ratio: 4/5;
-    background: linear-gradient(135deg, var(--charcoal), var(--surface));
-    border: 1px solid var(--border);
+    /* max-width: 620px; */
+    background: var(--charcoal);
+    border: 0;
     position: relative;
     overflow: hidden;
+    margin: 0 auto;
+  }
+  .about-visual img.about-visual-img {
+    width: 100%;
+    height: auto;
+    display: block;
   }
   .about-visual::before {
     content: '';
@@ -604,6 +635,16 @@
       linear-gradient(135deg, rgba(201,168,76,0.08) 0%, transparent 50%),
       radial-gradient(ellipse at 80% 20%, rgba(201,168,76,0.1) 0%, transparent 50%);
   }
+  .about-visual::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(90deg, rgba(0,0,0,0.95) 0%, transparent 16%, transparent 84%, rgba(0,0,0,0.95) 100%),
+      linear-gradient(180deg, rgba(0,0,0,0.95) 0%, transparent 16%, transparent 84%, rgba(0,0,0,0.95) 100%),
+      radial-gradient(circle at center, transparent 45%, rgba(0,0,0,0.3) 65%, rgba(0,0,0,0.85) 90%, rgba(0,0,0,0.98) 100%);
+  }
   .about-visual-inner {
     position: absolute;
     inset: 2rem;
@@ -612,6 +653,11 @@
     flex-direction: column;
     justify-content: flex-end;
     padding: 2.5rem;
+    animation: floatSlow 12s ease-in-out infinite;
+  }
+  @keyframes floatSlow {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
   }
   .about-visual-icon {
     position: absolute;
@@ -839,6 +885,13 @@
   }
   .service-card:hover .service-arrow { opacity: 1; transform: translateX(0); }
 
+  @media (max-width: 1100px) {
+    .service-card { background: var(--charcoal); }
+    .service-card::before { transform: scaleX(1); }
+    .service-card .service-icon { opacity: 1; }
+    .service-card .service-arrow { opacity: 1; transform: translateX(0); }
+  }
+
   /* ==================== MANIFESTO ==================== */
   #manifesto {
     padding: 12rem 0;
@@ -892,65 +945,6 @@
     letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--muted);
-  }
-
-  /* ==================== PROCESS ==================== */
-  #process {
-    padding: 10rem 0;
-    background: var(--deep);
-  }
-  .process-header { margin-bottom: 6rem; }
-  .process-steps {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    position: relative;
-  }
-  .process-line {
-    position: absolute;
-    top: 3rem;
-    left: 10%;
-    right: 10%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold-dim), var(--gold), var(--gold-dim), transparent);
-  }
-  .process-step {
-    padding: 0 1rem;
-    text-align: center;
-    position: relative;
-    z-index: 1;
-  }
-  .process-step-num {
-    width: 60px; height: 60px;
-    border: 1px solid var(--border);
-    border-radius: 50%;
-    background: var(--deep);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 2rem;
-    font-family: var(--font-display);
-    font-size: 1.3rem;
-    color: var(--gold);
-    font-weight: 300;
-    transition: all 0.4s ease;
-    position: relative;
-  }
-  .process-step:hover .process-step-num {
-    background: rgba(201,168,76,0.1);
-    border-color: var(--gold);
-    box-shadow: 0 0 30px rgba(201,168,76,0.2);
-  }
-  .process-step-title {
-    font-family: var(--font-display);
-    font-size: 1.1rem;
-    color: var(--ivory);
-    margin-bottom: 0.8rem;
-    font-weight: 400;
-  }
-  .process-step-text {
-    font-size: 0.7rem;
-    color: var(--muted);
-    line-height: 1.7;
   }
 
   /* ==================== ACHIEVEMENTS ==================== */
@@ -1507,7 +1501,7 @@
     inset: 0;
     background: rgba(5,5,5,0.97);
     backdrop-filter: blur(20px);
-    z-index: 999;
+    z-index: 10000;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1535,7 +1529,50 @@
     border: none;
     color: var(--ivory);
     font-size: 1.5rem;
-    cursor: none;
+    cursor: pointer;
+    z-index: 10001;
+  }
+
+  /* ==================== TAILWIND CUSTOM UTILITIES ==================== */
+  .text-gradient {
+    background: linear-gradient(135deg, #e8ce93 0%, #c5a059 50%, #8a6e35 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glass {
+    background: rgba(15, 15, 17, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .glass-card {
+    background: linear-gradient(145deg, rgba(25,25,30,0.4) 0%, rgba(10,10,12,0.8) 100%);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.03);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+  }
+
+  .img-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, rgba(5,5,5,0.2) 0%, #050505 100%);
+  }
+
+  .reveal-text {
+    display: inline-block;
+    opacity: 0;
+    animation: textRevealAnim 1s cubic-bezier(0.22,1,0.36,1) forwards;
+  }
+  @keyframes textRevealAnim {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  .magnetic {
+    position: relative;
+    overflow: visible;
   }
 
   /* ==================== RESPONSIVE ==================== */
@@ -1551,8 +1588,6 @@
     .stat-item { border-bottom: 1px solid var(--border); }
     .services-header { grid-template-columns: 1fr; gap: 2rem; }
     .services-grid { grid-template-columns: repeat(2, 1fr); }
-    .process-steps { grid-template-columns: 1fr 1fr; gap: 3rem; }
-    .process-line { display: none; }
     .achievements-grid { grid-template-columns: 1fr 1fr; }
     .achievement-card.featured { grid-row: span 1; }
     .why-grid { grid-template-columns: 1fr; gap: 4rem; }
@@ -1567,13 +1602,22 @@
     .form-row { grid-template-columns: 1fr; }
     .stats-grid { grid-template-columns: 1fr; }
     .achievements-grid { grid-template-columns: 1fr; }
-    .process-steps { grid-template-columns: 1fr; }
     .footer-grid { grid-template-columns: 1fr; }
     .cta-band-buttons { flex-direction: column; }
     .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
     .hero-floating-badge { display: none; }
     .about-pillars { flex-direction: column; }
   }
+
+  .relative.z-10.text-center.px-4.mt-20.max-w-5xl {
+    display: flex;
+    flex-direction: column;
+  }
+  .hero-ctas.reveal-text{
+      display: flex;
+    flex-direction: column;
+  }
+
 </style>
 </head>
 <body>
@@ -1584,18 +1628,17 @@
 
 <!-- LOADER -->
 <div id="loader">
-  <div class="loader-monogram">BV</div>
+  <!-- <div class="loader-monogram">BV</div> -->
   <div class="loader-line"></div>
-  <div class="loader-text">Avokate Brisilda Vata — Tiranë</div>
+  <div class="loader-text">Avokate Brisilda Vata</div>
 </div>
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
-  <button class="mobile-close" id="mobileClose">✕</button>
+  <button type="button" class="mobile-close" id="mobileClose">✕</button>
   <a href="#about" onclick="closeMobile()">Rreth Nesh</a>
   <a href="#services" onclick="closeMobile()">Shërbimet</a>
   <a href="#achievements" onclick="closeMobile()">Sukseset</a>
-  <a href="#process" onclick="closeMobile()">Procesi</a>
   <a href="#contact" onclick="closeMobile()">Kontakt</a>
 </div>
 
@@ -1609,7 +1652,6 @@
     <li><a href="#about">Rreth Nesh</a></li>
     <li><a href="#services">Shërbimet</a></li>
     <li><a href="#achievements">Sukseset</a></li>
-    <li><a href="#process">Procesi</a></li>
     <li><a href="#faq">FAQ</a></li>
   </ul>
   <a href="#contact" class="nav-cta"><span>Konsultim Falas</span></a>
@@ -1619,39 +1661,40 @@
 </nav>
 
 <!-- ==================== HERO ==================== -->
-<section id="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-grid"></div>
-  <div class="hero-content">
-    <div class="hero-eyebrow">
-      <div class="hero-eyebrow-line"></div>
-      <span class="hero-eyebrow-text">Zyrë Avokature Elite — Tiranë, Shqipëri</span>
-    </div>
-    <h1 class="hero-title">
-      <span class="word-1">Drejtësia</span>
-      <span class="word-2">është</span>
-      <span class="word-3">prioriteti.</span>
-    </h1>
-    <p class="hero-subtitle">
-      Përfaqësim dhe këshillim ligjor të nivelit më të lartë. Avokate Brisilda Vata — zëri juaj i fuqishëm përpara ligjit, me diskrecion, integritet dhe ekspertizë ndërkombëtare.
-    </p>
-    <div class="hero-ctas">
-      <a href="#contact" class="btn-primary"><span>Konsultim Falas</span></a>
-      <a href="#services" class="btn-secondary">
-        <span class="btn-secondary-arrow"></span>
-        Zbulo Shërbimet
-      </a>
-    </div>
-  </div>
-  <div class="hero-floating-badge">
-    <div class="hero-badge-number">15+</div>
-    <div class="hero-badge-text">Vite Eksperiencë</div>
-  </div>
-  <div class="hero-scroll-indicator">
-    <div class="hero-scroll-text">Zbulo</div>
-    <div class="hero-scroll-line"></div>
-  </div>
-</section>
+<!-- Hero Section -->
+    <header class="relative h-screen w-full flex items-center justify-center overflow-hidden">
+        <!-- Background Layer -->
+        <div class="absolute inset-0 z-0 scale-110" id="hero-bg">
+            <img src="./assets/background.png" 
+                 alt="Themis Scale" 
+                 class="w-full h-full object-cover opacity-40">
+            <div class="absolute inset-0 bg-gradient-to-b from-dark/60 via-dark/80 to-dark"></div>
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(197,160,89,0.05)_0%,transparent_100%)]"></div>
+        </div>
+
+        <!-- Content -->
+        <div class="relative z-10 text-center px-4 mt-20 max-w-5xl">
+            <!-- <p class="font-sans text-gold text-xs md:text-sm uppercase tracking-[0.3em] mb-6 reveal-text">Përfaqësim Ligjor Elitar</p> -->
+            <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl leading-tight mb-8">
+                <span class="block reveal-text">Pushteti i</span>
+                <span class="block text-gradient italic pr-4 reveal-text">Ekselencës Ligjore.</span>
+            </h1>
+            <p class="font-sans text-gray-400 text-sm md:text-base max-w-2xl mx-auto leading-relaxed mb-12 reveal-text">
+                Përfaqësim dhe këshillim ligjor të nivelit më të lartë.
+            </p>
+            
+            <div class="hero-ctas reveal-text">
+                <a href="#contact" class="nav-cta magnetic inline-flex items-center gap-4">
+                    <span>Konsultim Falas</span>
+                    <i class="ph ph-arrow-right"></i>
+                </a>
+                <a href="#services" class="btn-secondary">
+                    <span>Zbulo shërbimet</span>
+                    <span class="btn-secondary-arrow"></span>
+                </a>
+            </div>
+        </div>
+    </header>
 
 <!-- ==================== ABOUT ==================== -->
 <section id="about">
@@ -1701,13 +1744,13 @@
       </div>
       <div class="about-right reveal-right">
         <div class="about-visual">
-          <div class="about-visual-icon">⚖</div>
+          <img src="./assets/background.png" alt="Brisilda Vata" class="about-visual-img">
           <div class="about-visual-inner">
-            <div class="about-corner-badge">Avokate</div>
-            <div class="about-badge">
+            <!-- <div class="about-corner-badge">Avokate</div> -->
+            <!-- <div class="about-badge">
               <div class="about-badge-title">Brisilda Vata</div>
               <div class="about-badge-subtitle">Avokate — Bari i Shqipërisë · Tiranë</div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -1808,7 +1851,7 @@
     </blockquote>
     <div class="reveal" style="transition-delay:0.2s">
       <div class="manifesto-name">Av. Brisilda Vata</div>
-      <div class="manifesto-title">Avokate e Regjistruar — Bari i Shqipërisë</div>
+      <!-- <div class="manifesto-title">Avokate e Regjistruar — Bari i Shqipërisë</div> -->
     </div>
   </div>
 </section>
@@ -1877,7 +1920,7 @@
 </section> -->
 
 <!-- ==================== TESTIMONIALS ==================== -->
-<section id="testimonials">
+<!-- <section id="testimonials">
   <div class="section-container">
     <div class="testimonials-header reveal">
       <div class="section-label" style="justify-content:center">
@@ -1964,9 +2007,9 @@
             <div class="testimonial-role">Kundërshtim Ekspulsimi</div>
           </div>
         </div>
-      </div>
+      </div> -->
       <!-- Clone for infinite scroll -->
-      <div class="testimonial-card">
+      <!-- <div class="testimonial-card">
         <div class="testimonial-stars">★★★★★</div>
         <div class="testimonial-quote-mark">"</div>
         <p class="testimonial-text">Avokate Brisilda ma zgjidhi çështjen e lejes së qëndrimit kur mendoja se nuk kishte rrugë zgjidhje. Profesionalizmi dhe angazhimi i saj janë të pamatshëm.</p>
@@ -2040,7 +2083,7 @@
       </div>
     </div>
   </div>
-</section>
+</section> -->
 
 <!-- ==================== WHY ==================== -->
 <!-- <section id="why">
@@ -2334,7 +2377,7 @@
     <div class="footer-grid">
       <div>
         <div class="footer-brand-name">Avokate Brisilda Vata</div>
-        <span class="footer-brand-tag">Zyrë Avokature — Tiranë, Shqipëri</span>
+        <span class="footer-brand-tag">Zyrë Avokatie — Tiranë</span>
         <p class="footer-brand-desc">
           Përfaqësim dhe këshillim ligjor elitar me profesionalizëm, korrektësi, diskrecion dhe përkushtim maksimal ndaj klientit.
         </p>
@@ -2355,7 +2398,6 @@
         <ul class="footer-links">
           <li><a href="#about">Rreth Nesh</a></li>
           <li><a href="#achievements">Sukseset</a></li>
-          <li><a href="#process">Procesi</a></li>
           <li><a href="#testimonials">Klientët</a></li>
           <li><a href="#faq">FAQ</a></li>
           <li><a href="#contact">Kontakt</a></li>
@@ -2432,10 +2474,13 @@ const mobileMenu = document.getElementById('mobileMenu');
 const mobileClose = document.getElementById('mobileClose');
 
 hamburger.addEventListener('click', () => mobileMenu.classList.add('open'));
-mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+mobileClose.addEventListener('click', (e) => { e.preventDefault(); mobileMenu.classList.remove('open'); });
 function closeMobile() { mobileMenu.classList.remove('open'); }
+const mobileMenuLinks = mobileMenu.querySelectorAll('a[href^="#"]');
+mobileMenuLinks.forEach(link => link.addEventListener('click', closeMobile));
 
 // ===== REVEAL ON SCROLL =====
+document.querySelectorAll('.service-card').forEach(card => card.classList.add('reveal'));
 const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach((entry, i) => {
