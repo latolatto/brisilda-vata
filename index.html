@@ -1,0 +1,2545 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avokate Brisilda Vata — Zyrë Avokature | Tiranë</title>
+<meta name="description" content="Avokate Brisilda Vata — Përfaqësim dhe këshillim ligjor elitar. Emigracion, Çështje Penale, Civile, Ndërkombëtare. Tiranë, Shqipëri.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Montserrat:wght@200;300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #050505;
+    --deep: #0a0a0f;
+    --charcoal: #111118;
+    --surface: #141420;
+    --gold: #c9a84c;
+    --gold-light: #e8cc80;
+    --gold-dim: #8a6a2a;
+    --ivory: #f5f0e8;
+    --silver: #a8a8b8;
+    --muted: #4a4a5a;
+    --border: rgba(201,168,76,0.2);
+    --border-subtle: rgba(255,255,255,0.05);
+    --glow: rgba(201,168,76,0.15);
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-ui: 'Montserrat', sans-serif;
+    --font-accent: 'Playfair Display', Georgia, serif;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  body {
+    background: var(--black);
+    color: var(--ivory);
+    font-family: var(--font-ui);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    position: fixed;
+    width: 8px; height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, width 0.3s ease, height 0.3s ease, background 0.3s ease;
+    mix-blend-mode: screen;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 1px solid rgba(201,168,76,0.5);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.12s ease, width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+  }
+  .cursor.hovering { width: 14px; height: 14px; background: var(--gold-light); }
+  .cursor-ring.hovering { width: 52px; height: 52px; border-color: var(--gold); }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--gold-dim); }
+
+  /* NOISE TEXTURE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9997;
+    opacity: 0.6;
+  }
+
+  /* ==================== LOADING SCREEN ==================== */
+  #loader {
+    position: fixed;
+    inset: 0;
+    background: var(--black);
+    z-index: 9990;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+  }
+  .loader-monogram {
+    font-family: var(--font-display);
+    font-size: 5rem;
+    font-weight: 300;
+    letter-spacing: 0.2em;
+    color: transparent;
+    background: linear-gradient(135deg, var(--gold-dim), var(--gold), var(--gold-light), var(--gold));
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: shimmer 2s ease-in-out infinite;
+  }
+  @keyframes shimmer {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+  }
+  .loader-line {
+    width: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    animation: loaderLine 2.2s ease-out forwards;
+  }
+  @keyframes loaderLine {
+    to { width: 200px; }
+  }
+  .loader-text {
+    font-family: var(--font-ui);
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.35em;
+    color: var(--silver);
+    opacity: 0;
+    animation: fadeIn 1s ease 0.8s forwards;
+    text-transform: uppercase;
+  }
+  #loader.fade-out {
+    animation: loaderFade 0.8s ease forwards;
+  }
+  @keyframes loaderFade {
+    to { opacity: 0; pointer-events: none; }
+  }
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  /* ==================== NAVIGATION ==================== */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    padding: 1.8rem 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.5s ease;
+  }
+  nav.scrolled {
+    padding: 1.2rem 4rem;
+    background: rgba(5,5,5,0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    color: var(--ivory);
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+  }
+  .nav-logo span {
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    font-family: var(--font-ui);
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--silver);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.3s ease;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--gold);
+    padding: 0.75rem 1.8rem;
+    border: none;
+    cursor: none;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  }
+  .nav-cta:hover {
+    background: var(--gold-light);
+    transform: translateY(-1px);
+  }
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: none;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+  .nav-hamburger span {
+    width: 24px; height: 1px;
+    background: var(--ivory);
+    transition: all 0.3s ease;
+  }
+
+  /* ==================== HERO ==================== */
+  #hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 40%, rgba(201,168,76,0.04) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 80% at 10% 80%, rgba(201,168,76,0.03) 0%, transparent 60%),
+      linear-gradient(160deg, var(--deep) 0%, var(--black) 50%, #08060e 100%);
+  }
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 0%, transparent 80%);
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 4rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 100%;
+    padding-top: 8rem;
+  }
+  .hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: heroReveal 1s ease 2.8s forwards;
+  }
+  .hero-eyebrow-line {
+    width: 60px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold));
+  }
+  .hero-eyebrow-text {
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  @keyframes heroReveal {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-title {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: clamp(4rem, 10vw, 9rem);
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+    color: var(--ivory);
+  }
+  .hero-title .word-1 {
+    display: block;
+    opacity: 0;
+    transform: translateY(60px);
+    animation: heroReveal 1.2s cubic-bezier(0.22,1,0.36,1) 3s forwards;
+  }
+  .hero-title .word-2 {
+    display: block;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(201,168,76,0.4);
+    font-style: italic;
+    opacity: 0;
+    transform: translateY(60px);
+    animation: heroReveal 1.2s cubic-bezier(0.22,1,0.36,1) 3.15s forwards;
+  }
+  .hero-title .word-3 {
+    display: block;
+    background: linear-gradient(135deg, var(--gold-dim) 0%, var(--gold) 40%, var(--gold-light) 70%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    opacity: 0;
+    transform: translateY(60px);
+    animation: heroReveal 1.2s cubic-bezier(0.22,1,0.36,1) 3.3s forwards;
+  }
+  .hero-subtitle {
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    color: var(--silver);
+    max-width: 480px;
+    line-height: 1.8;
+    margin-top: 2.5rem;
+    margin-bottom: 3.5rem;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: heroReveal 1s ease 3.6s forwards;
+  }
+  .hero-ctas {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: heroReveal 1s ease 3.8s forwards;
+  }
+  .btn-primary {
+    font-family: var(--font-ui);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--black);
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    padding: 1.1rem 3rem;
+    border: none;
+    cursor: none;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    display: inline-block;
+  }
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .btn-primary:hover::before { opacity: 1; }
+  .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 20px 60px rgba(201,168,76,0.3); }
+  .btn-primary span { position: relative; z-index: 1; }
+  .btn-secondary {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    transition: gap 0.3s ease;
+  }
+  .btn-secondary:hover { gap: 1.2rem; }
+  .btn-secondary-arrow {
+    width: 30px; height: 1px;
+    background: var(--gold);
+    position: relative;
+    transition: width 0.3s ease;
+  }
+  .btn-secondary-arrow::after {
+    content: '';
+    position: absolute;
+    right: 0; top: -3px;
+    width: 6px; height: 6px;
+    border-right: 1px solid var(--gold);
+    border-top: 1px solid var(--gold);
+    transform: rotate(45deg);
+  }
+  .btn-secondary:hover .btn-secondary-arrow { width: 44px; }
+
+  .hero-scroll-indicator {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+    opacity: 0;
+    animation: heroReveal 1s ease 4.2s forwards;
+  }
+  .hero-scroll-text {
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+  .hero-scroll-line {
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(var(--muted), transparent);
+    animation: scrollPulse 2s ease infinite;
+  }
+  @keyframes scrollPulse {
+    0%, 100% { transform: scaleY(1); opacity: 0.4; }
+    50% { transform: scaleY(0.5); opacity: 1; }
+  }
+
+  .hero-floating-badge {
+    position: absolute;
+    right: 4rem;
+    bottom: 8rem;
+    width: 140px; height: 140px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    background: rgba(201,168,76,0.03);
+    backdrop-filter: blur(10px);
+    animation: float 4s ease-in-out infinite, heroReveal 1s ease 4s forwards;
+    opacity: 0;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+  .hero-badge-number {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .hero-badge-text {
+    font-size: 0.5rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--silver);
+    text-align: center;
+    padding: 0 1rem;
+  }
+
+  /* ==================== MARQUEE ==================== */
+  .marquee-section {
+    padding: 2rem 0;
+    border-top: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+    overflow: hidden;
+    background: rgba(201,168,76,0.02);
+  }
+  .marquee-track {
+    display: flex;
+    animation: marqueeScroll 30s linear infinite;
+    width: max-content;
+  }
+  .marquee-item {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 0 2rem;
+    white-space: nowrap;
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .marquee-dot {
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+  @keyframes marqueeScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ==================== SECTION COMMON ==================== */
+  section { position: relative; overflow: hidden; }
+  .section-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 4rem;
+  }
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.9s cubic-bezier(0.22,1,0.36,1), transform 0.9s cubic-bezier(0.22,1,0.36,1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-left { opacity: 0; transform: translateX(-50px); transition: opacity 0.9s ease, transform 0.9s ease; }
+  .reveal-left.visible { opacity: 1; transform: translateX(0); }
+  .reveal-right { opacity: 0; transform: translateX(50px); transition: opacity 0.9s ease, transform 0.9s ease; }
+  .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+  .section-label-line {
+    width: 40px; height: 1px;
+    background: var(--gold);
+  }
+  .section-label-text {
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .section-heading {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 300;
+    line-height: 1.05;
+    color: var(--ivory);
+  }
+  .section-heading em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  /* ==================== ABOUT / IDENTITY ==================== */
+  #about {
+    padding: 10rem 0;
+    background: linear-gradient(180deg, var(--black) 0%, var(--deep) 50%, var(--black) 100%);
+  }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8rem;
+    align-items: center;
+  }
+  .about-left .section-heading { margin-bottom: 2rem; }
+  .about-description {
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: var(--silver);
+    line-height: 1.9;
+    margin-bottom: 1.5rem;
+  }
+  .about-signature {
+    font-family: var(--font-accent);
+    font-size: 2.5rem;
+    font-style: italic;
+    color: var(--gold);
+    margin-top: 2.5rem;
+    opacity: 0.8;
+  }
+  .about-right {
+    position: relative;
+  }
+  .about-visual {
+    width: 100%;
+    aspect-ratio: 4/5;
+    background: linear-gradient(135deg, var(--charcoal), var(--surface));
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .about-visual::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(135deg, rgba(201,168,76,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba(201,168,76,0.1) 0%, transparent 50%);
+  }
+  .about-visual-inner {
+    position: absolute;
+    inset: 2rem;
+    border: 1px solid rgba(201,168,76,0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2.5rem;
+  }
+  .about-visual-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    font-family: var(--font-display);
+    font-size: 10rem;
+    font-weight: 300;
+    color: rgba(201,168,76,0.05);
+    letter-spacing: -0.05em;
+    user-select: none;
+    line-height: 1;
+  }
+  .about-badge {
+    background: rgba(201,168,76,0.08);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(10px);
+    padding: 1.5rem 2rem;
+    position: relative;
+  }
+  .about-badge-title {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: var(--gold);
+    margin-bottom: 0.3rem;
+  }
+  .about-badge-subtitle {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--silver);
+  }
+  .about-corner-badge {
+    position: absolute;
+    top: -1.5rem;
+    right: 2rem;
+    background: var(--gold);
+    color: var(--black);
+    padding: 0.4rem 1.2rem;
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .about-pillars {
+    display: flex;
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+  .about-pillar {
+    flex: 1;
+    padding: 1.5rem;
+    border: 1px solid var(--border-subtle);
+    border-top: 1px solid var(--gold);
+    transition: border-color 0.3s ease, background 0.3s ease;
+  }
+  .about-pillar:hover {
+    background: rgba(201,168,76,0.03);
+    border-top-color: var(--gold-light);
+  }
+  .about-pillar-num {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    color: var(--gold);
+    font-weight: 300;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .about-pillar-title {
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ivory);
+    margin-bottom: 0.4rem;
+  }
+  .about-pillar-text {
+    font-size: 0.72rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ==================== STATS ==================== */
+  #stats {
+    padding: 6rem 0;
+    background: var(--charcoal);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+  .stat-item {
+    padding: 3rem;
+    border-right: 1px solid var(--border);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.4s ease;
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-item::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 0;
+    background: linear-gradient(0deg, rgba(201,168,76,0.05), transparent);
+    transition: height 0.4s ease;
+  }
+  .stat-item:hover::before { height: 100%; }
+  .stat-number {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 5vw, 5rem);
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 0.8rem;
+  }
+  .stat-suffix {
+    font-size: 0.6em;
+    font-weight: 300;
+  }
+  .stat-label {
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--silver);
+  }
+  .stat-desc {
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-top: 0.4rem;
+  }
+
+  /* ==================== SERVICES ==================== */
+  #services {
+    padding: 10rem 0;
+    background: var(--black);
+  }
+  .services-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: end;
+    margin-bottom: 6rem;
+  }
+  .services-intro {
+    font-size: 0.85rem;
+    color: var(--silver);
+    line-height: 1.9;
+    font-weight: 300;
+  }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border-subtle);
+  }
+  .service-card {
+    background: var(--black);
+    padding: 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.4s ease;
+    cursor: none;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+  }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-card:hover { background: var(--charcoal); }
+  .service-num {
+    font-family: var(--font-display);
+    font-size: 0.75rem;
+    color: var(--gold-dim);
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.1em;
+  }
+  .service-icon {
+    width: 40px; height: 40px;
+    margin-bottom: 1.2rem;
+    color: var(--gold);
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+  }
+  .service-card:hover .service-icon { opacity: 1; }
+  .service-title {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--ivory);
+    margin-bottom: 0.8rem;
+    line-height: 1.2;
+  }
+  .service-desc {
+    font-size: 0.72rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .service-arrow {
+    position: absolute;
+    bottom: 2rem; right: 2rem;
+    width: 32px; height: 32px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    opacity: 0;
+    transform: translateX(-8px);
+    transition: all 0.3s ease;
+    font-size: 0.7rem;
+  }
+  .service-card:hover .service-arrow { opacity: 1; transform: translateX(0); }
+
+  /* ==================== MANIFESTO ==================== */
+  #manifesto {
+    padding: 12rem 0;
+    background: linear-gradient(180deg, var(--black) 0%, #080810 100%);
+    text-align: center;
+    position: relative;
+  }
+  .manifesto-bg-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-display);
+    font-size: clamp(6rem, 15vw, 18rem);
+    font-weight: 300;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(201,168,76,0.04);
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+  }
+  .manifesto-quote {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 300;
+    line-height: 1.3;
+    color: var(--ivory);
+    max-width: 900px;
+    margin: 0 auto 3rem;
+    position: relative;
+    z-index: 1;
+  }
+  .manifesto-quote em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .manifesto-quote-line {
+    width: 80px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 0 auto 2rem;
+  }
+  .manifesto-name {
+    font-family: var(--font-accent);
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--gold);
+    margin-bottom: 0.4rem;
+  }
+  .manifesto-title {
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ==================== PROCESS ==================== */
+  #process {
+    padding: 10rem 0;
+    background: var(--deep);
+  }
+  .process-header { margin-bottom: 6rem; }
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    position: relative;
+  }
+  .process-line {
+    position: absolute;
+    top: 3rem;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-dim), var(--gold), var(--gold-dim), transparent);
+  }
+  .process-step {
+    padding: 0 1rem;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+  .process-step-num {
+    width: 60px; height: 60px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: var(--deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 2rem;
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    color: var(--gold);
+    font-weight: 300;
+    transition: all 0.4s ease;
+    position: relative;
+  }
+  .process-step:hover .process-step-num {
+    background: rgba(201,168,76,0.1);
+    border-color: var(--gold);
+    box-shadow: 0 0 30px rgba(201,168,76,0.2);
+  }
+  .process-step-title {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    color: var(--ivory);
+    margin-bottom: 0.8rem;
+    font-weight: 400;
+  }
+  .process-step-text {
+    font-size: 0.7rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* ==================== ACHIEVEMENTS ==================== */
+  #achievements {
+    padding: 10rem 0;
+    background: var(--black);
+  }
+  .achievements-header {
+    text-align: center;
+    margin-bottom: 6rem;
+  }
+  .achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  .achievement-card {
+    background: var(--charcoal);
+    border: 1px solid var(--border-subtle);
+    padding: 3rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    cursor: none;
+  }
+  .achievement-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(201,168,76,0.05) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .achievement-card:hover { border-color: var(--border); transform: translateY(-4px); }
+  .achievement-card:hover::after { opacity: 1; }
+  .achievement-card.featured {
+    grid-row: span 2;
+    background: linear-gradient(135deg, rgba(201,168,76,0.08) 0%, var(--charcoal) 40%);
+    border-color: var(--border);
+  }
+  .achievement-icon {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  .achievement-value {
+    font-family: var(--font-display);
+    font-size: 3.5rem;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+  .achievement-card.featured .achievement-value { font-size: 5rem; }
+  .achievement-label {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: var(--ivory);
+    margin-bottom: 0.8rem;
+    font-weight: 400;
+  }
+  .achievement-desc {
+    font-size: 0.72rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .achievement-bar {
+    margin-top: 1.5rem;
+    height: 2px;
+    background: var(--border-subtle);
+    position: relative;
+    overflow: hidden;
+  }
+  .achievement-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold-dim), var(--gold));
+    width: 0;
+    transition: width 1.5s cubic-bezier(0.22,1,0.36,1);
+  }
+  .achievement-bar-fill.animated { width: var(--width); }
+
+  /* ==================== TESTIMONIALS ==================== */
+  #testimonials {
+    padding: 10rem 0;
+    background: var(--deep);
+    overflow: hidden;
+  }
+  .testimonials-header { text-align: center; margin-bottom: 5rem; }
+  .testimonials-track {
+    display: flex;
+    gap: 2rem;
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+  }
+  .testimonials-scroll {
+    display: flex;
+    gap: 2rem;
+    animation: testimonialsScroll 40s linear infinite;
+    flex-shrink: 0;
+  }
+  .testimonials-scroll:hover { animation-play-state: paused; }
+  @keyframes testimonialsScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .testimonial-card {
+    flex-shrink: 0;
+    width: 380px;
+    background: var(--charcoal);
+    border: 1px solid var(--border-subtle);
+    padding: 2.5rem;
+    position: relative;
+    transition: border-color 0.3s ease;
+  }
+  .testimonial-card:hover { border-color: var(--border); }
+  .testimonial-quote-mark {
+    font-family: var(--font-display);
+    font-size: 5rem;
+    color: var(--gold);
+    line-height: 0.8;
+    margin-bottom: 1rem;
+    opacity: 0.3;
+  }
+  .testimonial-text {
+    font-size: 0.82rem;
+    color: var(--silver);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    font-style: italic;
+  }
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .testimonial-avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    color: var(--black);
+    font-weight: 400;
+    flex-shrink: 0;
+  }
+  .testimonial-author-info {}
+  .testimonial-name {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--ivory);
+    margin-bottom: 0.2rem;
+  }
+  .testimonial-role {
+    font-size: 0.6rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+  .testimonial-stars {
+    position: absolute;
+    top: 2rem; right: 2rem;
+    color: var(--gold);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+  }
+
+  /* ==================== WHY US ==================== */
+  #why {
+    padding: 10rem 0;
+    background: var(--black);
+  }
+  .why-grid {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: 8rem;
+    align-items: start;
+  }
+  .why-sticky {
+    position: sticky;
+    top: 8rem;
+  }
+  .why-list { margin-top: 4rem; }
+  .why-item {
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--border-subtle);
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 1.5rem;
+    align-items: start;
+    transition: border-color 0.3s ease;
+    cursor: none;
+  }
+  .why-item:hover { border-color: var(--border); }
+  .why-item-num {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
+    color: var(--gold-dim);
+    font-weight: 400;
+    padding-top: 0.2rem;
+  }
+  .why-item-title {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    color: var(--ivory);
+    margin-bottom: 0.6rem;
+    font-weight: 400;
+    transition: color 0.3s ease;
+  }
+  .why-item:hover .why-item-title { color: var(--gold); }
+  .why-item-text {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  /* ==================== FAQ ==================== */
+  #faq {
+    padding: 10rem 0;
+    background: var(--deep);
+  }
+  .faq-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 8rem;
+  }
+  .faq-list { margin-top: 1rem; }
+  .faq-item {
+    border-bottom: 1px solid var(--border-subtle);
+    overflow: hidden;
+    cursor: none;
+  }
+  .faq-question {
+    padding: 1.8rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+  .faq-question-text {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    color: var(--ivory);
+    font-weight: 400;
+    transition: color 0.3s ease;
+  }
+  .faq-item.active .faq-question-text { color: var(--gold); }
+  .faq-toggle {
+    width: 28px; height: 28px;
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    font-size: 1.2rem;
+    line-height: 1;
+    transition: all 0.3s ease;
+  }
+  .faq-item.active .faq-toggle {
+    background: rgba(201,168,76,0.1);
+    border-color: var(--gold);
+    transform: rotate(45deg);
+  }
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+  }
+  .faq-item.active .faq-answer { max-height: 300px; }
+  .faq-answer-text {
+    padding-bottom: 1.8rem;
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.9;
+  }
+
+  /* ==================== CONTACT ==================== */
+  #contact {
+    padding: 10rem 0;
+    background: var(--black);
+    position: relative;
+  }
+  .contact-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(201,168,76,0.04) 0%, transparent 70%);
+  }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: 8rem;
+    position: relative;
+    z-index: 1;
+  }
+  .contact-info { padding-top: 1rem; }
+  .contact-item {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .contact-item:last-child { border-bottom: none; }
+  .contact-item-icon {
+    width: 44px; height: 44px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--gold);
+    font-size: 1rem;
+  }
+  .contact-item-label {
+    font-size: 0.55rem;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.4rem;
+  }
+  .contact-item-value {
+    font-size: 0.9rem;
+    color: var(--ivory);
+    font-weight: 300;
+    line-height: 1.6;
+  }
+  .contact-form {
+    background: var(--charcoal);
+    border: 1px solid var(--border-subtle);
+    padding: 3rem;
+  }
+  .contact-form-title {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--ivory);
+    margin-bottom: 0.5rem;
+  }
+  .contact-form-subtitle {
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+    letter-spacing: 0.05em;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .form-field {
+    margin-bottom: 1rem;
+  }
+  .form-label {
+    display: block;
+    font-size: 0.58rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--silver);
+    margin-bottom: 0.5rem;
+  }
+  .form-input, .form-textarea, .form-select {
+    width: 100%;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border-subtle);
+    color: var(--ivory);
+    padding: 0.9rem 1rem;
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    outline: none;
+    transition: border-color 0.3s ease, background 0.3s ease;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  .form-input:focus, .form-textarea:focus, .form-select:focus {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.03);
+  }
+  .form-input::placeholder, .form-textarea::placeholder { color: var(--muted); }
+  .form-textarea { resize: vertical; min-height: 120px; }
+  .form-select { cursor: none; }
+  .form-select option { background: var(--charcoal); }
+  .form-submit {
+    width: 100%;
+    padding: 1.1rem;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    border: none;
+    cursor: none;
+    font-family: var(--font-ui);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--black);
+    transition: all 0.3s ease;
+    margin-top: 0.5rem;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  }
+  .form-submit:hover {
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    transform: translateY(-2px);
+    box-shadow: 0 10px 40px rgba(201,168,76,0.25);
+  }
+
+  /* ==================== CTA BAND ==================== */
+  #cta-band {
+    padding: 8rem 0;
+    background: linear-gradient(135deg, rgba(201,168,76,0.08) 0%, transparent 50%);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-band-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(201,168,76,0.06) 0%, transparent 70%);
+  }
+  .cta-band-content { position: relative; z-index: 1; }
+  .cta-band-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 5vw, 5rem);
+    font-weight: 300;
+    color: var(--ivory);
+    margin-bottom: 1.5rem;
+    line-height: 1.1;
+  }
+  .cta-band-title em { font-style: italic; color: var(--gold); }
+  .cta-band-subtitle {
+    font-size: 0.8rem;
+    color: var(--silver);
+    margin-bottom: 3rem;
+    letter-spacing: 0.05em;
+    font-weight: 300;
+  }
+  .cta-band-buttons {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+  }
+  .cta-phone {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    transition: color 0.3s ease;
+  }
+  .cta-phone:hover { color: var(--gold-light); }
+
+  /* ==================== FOOTER ==================== */
+  footer {
+    background: var(--charcoal);
+    border-top: 1px solid var(--border-subtle);
+    padding: 5rem 0 3rem;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 5rem;
+    margin-bottom: 4rem;
+  }
+  .footer-brand-name {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: var(--ivory);
+    margin-bottom: 0.3rem;
+  }
+  .footer-brand-tag {
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+  .footer-brand-desc {
+    font-size: 0.75rem;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 280px;
+  }
+  .footer-heading {
+    font-size: 0.58rem;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+  .footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  .footer-links a {
+    font-size: 0.78rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .footer-links a::before {
+    content: '';
+    width: 12px; height: 1px;
+    background: var(--gold-dim);
+    transition: width 0.3s ease;
+    flex-shrink: 0;
+  }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-links a:hover::before { width: 18px; }
+  .footer-bottom {
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-subtle);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-copy {
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+  }
+  .footer-legal {
+    display: flex;
+    gap: 2rem;
+  }
+  .footer-legal a {
+    font-size: 0.6rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    transition: color 0.3s ease;
+  }
+  .footer-legal a:hover { color: var(--gold); }
+
+  /* ==================== MOBILE NAV ==================== */
+  .mobile-menu {
+    position: fixed;
+    inset: 0;
+    background: rgba(5,5,5,0.97);
+    backdrop-filter: blur(20px);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+  .mobile-menu.open { opacity: 1; pointer-events: all; }
+  .mobile-menu a {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--ivory);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: color 0.3s ease;
+  }
+  .mobile-menu a:hover { color: var(--gold); }
+  .mobile-close {
+    position: absolute;
+    top: 2rem; right: 2rem;
+    background: none;
+    border: none;
+    color: var(--ivory);
+    font-size: 1.5rem;
+    cursor: none;
+  }
+
+  /* ==================== RESPONSIVE ==================== */
+  @media (max-width: 1100px) {
+    nav { padding: 1.5rem 2rem; }
+    nav.scrolled { padding: 1rem 2rem; }
+    .nav-links, .nav-cta { display: none; }
+    .nav-hamburger { display: flex; }
+    .hero-content { padding: 0 2rem; padding-top: 7rem; }
+    .section-container { padding: 0 2rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 4rem; }
+    .stats-grid { grid-template-columns: repeat(2,1fr); }
+    .stat-item { border-bottom: 1px solid var(--border); }
+    .services-header { grid-template-columns: 1fr; gap: 2rem; }
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .process-steps { grid-template-columns: 1fr 1fr; gap: 3rem; }
+    .process-line { display: none; }
+    .achievements-grid { grid-template-columns: 1fr 1fr; }
+    .achievement-card.featured { grid-row: span 1; }
+    .why-grid { grid-template-columns: 1fr; gap: 4rem; }
+    .why-sticky { position: static; }
+    .faq-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .contact-grid { grid-template-columns: 1fr; gap: 4rem; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 3rem; }
+    .hero-floating-badge { right: 2rem; bottom: 6rem; width: 110px; height: 110px; }
+  }
+  @media (max-width: 700px) {
+    .services-grid { grid-template-columns: 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: 1fr; }
+    .achievements-grid { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .cta-band-buttons { flex-direction: column; }
+    .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+    .hero-floating-badge { display: none; }
+    .about-pillars { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- CUSTOM CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-monogram">BV</div>
+  <div class="loader-line"></div>
+  <div class="loader-text">Avokate Brisilda Vata — Tiranë</div>
+</div>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose">✕</button>
+  <a href="#about" onclick="closeMobile()">Rreth Nesh</a>
+  <a href="#services" onclick="closeMobile()">Shërbimet</a>
+  <a href="#achievements" onclick="closeMobile()">Sukseset</a>
+  <a href="#process" onclick="closeMobile()">Procesi</a>
+  <a href="#contact" onclick="closeMobile()">Kontakt</a>
+</div>
+
+<!-- NAVIGATION -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    Avokate Brisilda Vata
+    <span>Zyrë Avokature — Tiranë</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">Rreth Nesh</a></li>
+    <li><a href="#services">Shërbimet</a></li>
+    <li><a href="#achievements">Sukseset</a></li>
+    <li><a href="#process">Procesi</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta"><span>Konsultim Falas</span></a>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ==================== HERO ==================== -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div class="hero-eyebrow-line"></div>
+      <span class="hero-eyebrow-text">Zyrë Avokature Elite — Tiranë, Shqipëri</span>
+    </div>
+    <h1 class="hero-title">
+      <span class="word-1">Drejtësia</span>
+      <span class="word-2">është</span>
+      <span class="word-3">prioriteti.</span>
+    </h1>
+    <p class="hero-subtitle">
+      Përfaqësim dhe këshillim ligjor të nivelit më të lartë. Avokate Brisilda Vata — zëri juaj i fuqishëm përpara ligjit, me diskrecion, integritet dhe ekspertizë ndërkombëtare.
+    </p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-primary"><span>Konsultim Falas</span></a>
+      <a href="#services" class="btn-secondary">
+        <span class="btn-secondary-arrow"></span>
+        Zbulo Shërbimet
+      </a>
+    </div>
+  </div>
+  <div class="hero-floating-badge">
+    <div class="hero-badge-number">15+</div>
+    <div class="hero-badge-text">Vite Eksperiencë</div>
+  </div>
+  <div class="hero-scroll-indicator">
+    <div class="hero-scroll-text">Zbulo</div>
+    <div class="hero-scroll-line"></div>
+  </div>
+</section>
+
+<!-- ==================== ABOUT ==================== -->
+<section id="about">
+  <div class="section-container">
+    <div class="about-grid">
+      <div class="about-left">
+        <div class="reveal">
+          <div class="section-label">
+            <div class="section-label-line"></div>
+            <span class="section-label-text">Kush Jemi</span>
+          </div>
+          <h2 class="section-heading">
+            Angazhim i<br>
+            <em>plotë</em> ndaj<br>
+            klientit.
+          </h2>
+        </div>
+        <div class="reveal" style="transition-delay:0.1s">
+          <p class="about-description">
+            Avokate Brisilda Vata sjell në çdo çështje një kombinim unik të njohurive juridike të thella, eksperiencës ndërkombëtare dhe dedikimit të plotë ndaj klientit. Çdo rast trajtohet me seriozitetin maksimal.
+          </p>
+          <p class="about-description">
+            Me fokus të veçantë në çështjet e emigracionit, çështjet ndërkombëtare, civile dhe penale, zyra jonë ofron një shërbim 360 gradë — nga këshillimi fillestar deri tek përfaqësimi në gjykatë.
+          </p>
+          <p class="about-description">
+            Diskrecioni, integriteti dhe rezultati janë vlerat tona themelore. Klientët tanë nuk janë numra — janë njerëz me histori dhe të drejta që meritojnë mbrojtje reale.
+          </p>
+          <div class="about-signature">Brisilda Vata</div>
+        </div>
+        <div class="about-pillars reveal" style="transition-delay:0.2s">
+          <div class="about-pillar">
+            <div class="about-pillar-num">01</div>
+            <div class="about-pillar-title">Diskrecion</div>
+            <div class="about-pillar-text">Konfidencialiteti absolut në çdo çështje.</div>
+          </div>
+          <div class="about-pillar">
+            <div class="about-pillar-num">02</div>
+            <div class="about-pillar-title">Integritet</div>
+            <div class="about-pillar-text">Etika profesionale e patëmetë.</div>
+          </div>
+          <div class="about-pillar">
+            <div class="about-pillar-num">03</div>
+            <div class="about-pillar-title">Rezultat</div>
+            <div class="about-pillar-text">Fokus i qartë tek fitorja e klientit.</div>
+          </div>
+        </div>
+      </div>
+      <div class="about-right reveal-right">
+        <div class="about-visual">
+          <div class="about-visual-icon">⚖</div>
+          <div class="about-visual-inner">
+            <div class="about-corner-badge">Avokate</div>
+            <div class="about-badge">
+              <div class="about-badge-title">Brisilda Vata</div>
+              <div class="about-badge-subtitle">Avokate — Bari i Shqipërisë · Tiranë</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================== SERVICES ==================== -->
+<section id="services">
+  <div class="section-container">
+    <div class="services-header">
+      <div class="reveal">
+        <div class="section-label">
+          <div class="section-label-line"></div>
+          <span class="section-label-text">Shërbimet Tona</span>
+        </div>
+        <h2 class="section-heading">
+          Ekspertizë<br>
+          <em>e plotë</em><br>
+          juridike.
+        </h2>
+      </div>
+      <div class="reveal" style="transition-delay:0.15s">
+        <p class="services-intro">
+          Zyra jonë mbulon një spektër të gjerë çështjesh juridike, nga ato civile dhe penale, deri tek çështjet ndërkombëtare dhe emigracionit. Çdo fushë kërkon ekspertizë specifike dhe ne e ofrojmë atë në nivel maksimal.
+        </p>
+      </div>
+    </div>
+    <div class="services-grid reveal">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <svg class="service-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/></svg>
+        <div class="service-title">Përfaqësim Gjyqësor</div>
+        <div class="service-desc">Mbrojtje profesionale e interesave tuaja në çdo nivel gjykate, me strategji të qartë dhe argumente të fuqishme.</div>
+        <div class="service-arrow">→</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <svg class="service-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <div class="service-title">Emigracion & Azil</div>
+        <div class="service-desc">Lejet e qëndrimit, azili, vizat, ribashkimi familjar dhe të gjitha procedurat e emigracionit ndërkombëtar.</div>
+        <div class="service-arrow">→</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <svg class="service-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+        <div class="service-title">Çështje Penale</div>
+        <div class="service-desc">Mbrojtje e plotë penale, nga hetimi e deri tek gjykata e apelit. Strategji ligjore e ngritur mbi fakte dhe dëshmi.</div>
+        <div class="service-arrow">→</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">04</div>
+        <svg class="service-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        <div class="service-title">Divorc & Familjar</div>
+        <div class="service-desc">Divorci, kujdestaria e fëmijëve, pensioni familjar dhe konfliktet familjare me takt dhe profesionalizëm.</div>
+        <div class="service-arrow">→</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">05</div>
+        <svg class="service-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-2 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+        <div class="service-title">Pronësi & Kontrata</div>
+        <div class="service-desc">Transaksionet e pronës, kontratat e qirasë dhe blerjes, pretendimet mbi pronësinë dhe mosmarrëveshjet pronësore.</div>
+        <div class="service-arrow">→</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">06</div>
+        <svg class="service-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        <div class="service-title">Trashëgimi</div>
+        <div class="service-desc">Planifikimi i trashëgimisë, testamentet, çështjet e trashëgimisë ndërkombëtare dhe zgjidhja e mosmarrëveshjeve.</div>
+        <div class="service-arrow">→</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">07</div>
+        <svg class="service-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9"/></svg>
+        <div class="service-title">Ndërkombëtare</div>
+        <div class="service-desc">Çështje juridike me element ndërkombëtar, kontratat ndërkombëtare, bashkëpunime me zyra europiane.</div>
+        <div class="service-arrow">→</div>
+      </div>
+      <div class="service-card">
+        <div class="service-num">08</div>
+        <svg class="service-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        <div class="service-title">Ekspulse & Apelime</div>
+        <div class="service-desc">Kundërshtimi i urdhrave të ekspulsimit dhe deportimit. Apelime administrative dhe gjyqësore me shkallë të lartë suksesi.</div>
+        <div class="service-arrow">→</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== MANIFESTO ==================== -->
+<section id="manifesto">
+  <div class="manifesto-bg-text">DREJTËSI</div>
+  <div class="section-container">
+    <div class="manifesto-quote-line reveal"></div>
+    <blockquote class="manifesto-quote reveal" style="transition-delay:0.1s">
+      "Çdo klient meriton jo vetëm <em>mbrojtje</em>, por edhe <em>kuptim</em> të plotë të situatës së tij. Ky është standardi ynë — i panegociueshëm."
+    </blockquote>
+    <div class="reveal" style="transition-delay:0.2s">
+      <div class="manifesto-name">Av. Brisilda Vata</div>
+      <div class="manifesto-title">Avokate e Regjistruar — Bari i Shqipërisë</div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ==================== ACHIEVEMENTS ==================== -->
+<!-- <section id="achievements">
+  <div class="section-container">
+    <div class="achievements-header reveal">
+      <div class="section-label" style="justify-content:center">
+        <div class="section-label-line"></div>
+        <span class="section-label-text">Sukseset Tona</span>
+        <div class="section-label-line" style="transform:rotate(180deg)"></div>
+      </div>
+      <h2 class="section-heading" style="margin-top:1rem">
+        Rekord <em>i provuar</em><br>
+        i fitoreve ligjore.
+      </h2>
+    </div>
+    <div class="achievements-grid">
+      <div class="achievement-card featured reveal">
+        <div class="achievement-icon">🏆</div>
+        <div class="achievement-value"><span class="counter" data-target="500">0</span>+</div>
+        <div class="achievement-label">Çështje të Fituara</div>
+        <div class="achievement-desc">Gjatë 15 viteve të praktikës, zyra jonë ka fituar mbi 500 çështje në gjykata të shkallëve të ndryshme, duke siguruar rezultate konkrete dhe jetë të ndryshuar.</div>
+        <div class="achievement-bar"><div class="achievement-bar-fill" style="--width: 95%"></div></div>
+      </div>
+      <div class="achievement-card reveal" style="transition-delay:0.1s">
+        <div class="achievement-icon">🛡</div>
+        <div class="achievement-value"><span class="counter" data-target="120">0</span>+</div>
+        <div class="achievement-label">Raste Emigracioni</div>
+        <div class="achievement-desc">Leje qëndrimi, azil dhe kundërshtime ekspulsimi të mbrojtura me sukses.</div>
+        <div class="achievement-bar"><div class="achievement-bar-fill" style="--width: 90%"></div></div>
+      </div>
+      <div class="achievement-card reveal" style="transition-delay:0.2s">
+        <div class="achievement-icon">⚖️</div>
+        <div class="achievement-value"><span class="counter" data-target="85">0</span>+</div>
+        <div class="achievement-label">Çështje Penale</div>
+        <div class="achievement-desc">Mbrojtje penale me rezultate të jashtëzakonshme dhe strategji ligjore inovative.</div>
+        <div class="achievement-bar"><div class="achievement-bar-fill" style="--width: 80%"></div></div>
+      </div>
+      <div class="achievement-card reveal" style="transition-delay:0.1s">
+        <div class="achievement-icon">🌍</div>
+        <div class="achievement-value"><span class="counter" data-target="30">0</span>+</div>
+        <div class="achievement-label">Shtete</div>
+        <div class="achievement-desc">Çështje me dimension ndërkombëtar në mbi 30 vende të botës.</div>
+        <div class="achievement-bar"><div class="achievement-bar-fill" style="--width: 70%"></div></div>
+      </div>
+      <div class="achievement-card reveal" style="transition-delay:0.2s">
+        <div class="achievement-icon">👨‍👩‍👧</div>
+        <div class="achievement-value"><span class="counter" data-target="200">0</span>+</div>
+        <div class="achievement-label">Familje Ribashkuara</div>
+        <div class="achievement-desc">Familjeve të ndara nga kufijtë u kemi kthyer njëri-tjetrin.</div>
+        <div class="achievement-bar"><div class="achievement-bar-fill" style="--width: 85%"></div></div>
+      </div>
+      <div class="achievement-card reveal" style="transition-delay:0.3s">
+        <div class="achievement-icon">📋</div>
+        <div class="achievement-value"><span class="counter" data-target="98">0</span>%</div>
+        <div class="achievement-label">Klientë të Kënaqur</div>
+        <div class="achievement-desc">Shkalla e kënaqsisë së klientëve — burimi ynë kryesor i rekomandimeve.</div>
+        <div class="achievement-bar"><div class="achievement-bar-fill" style="--width: 98%"></div></div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<!-- ==================== TESTIMONIALS ==================== -->
+<section id="testimonials">
+  <div class="section-container">
+    <div class="testimonials-header reveal">
+      <div class="section-label" style="justify-content:center">
+        <div class="section-label-line"></div>
+        <span class="section-label-text">Çfarë Thonë Klientët</span>
+        <div class="section-label-line" style="transform:rotate(180deg)"></div>
+      </div>
+      <h2 class="section-heading" style="margin-top:1rem">
+        Zërat e <em>klientëve</em><br>
+        tanë.
+      </h2>
+    </div>
+  </div>
+  <div class="testimonials-track">
+    <div class="testimonials-scroll" id="testimonialsTrack">
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-quote-mark">"</div>
+        <p class="testimonial-text">Avokate Brisilda ma zgjidhi çështjen e lejes së qëndrimit kur mendoja se nuk kishte rrugë zgjidhje. Profesionalizmi dhe angazhimi i saj janë të pamatshëm.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">A</div>
+          <div class="testimonial-author-info">
+            <div class="testimonial-name">Artan M.</div>
+            <div class="testimonial-role">Leje Qëndrimi — Itali</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-quote-mark">"</div>
+        <p class="testimonial-text">Pas dy vitesh luftë ligjore, Brisilda e fitoi çështjen time të azilit. Nuk mund ta shprehë dot mirënjohjen time. Është avokate e jashtëzakonshme dhe njeri i mirë.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">M</div>
+          <div class="testimonial-author-info">
+            <div class="testimonial-name">Mira K.</div>
+            <div class="testimonial-role">Azil Politik — Gjermani</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-quote-mark">"</div>
+        <p class="testimonial-text">Çështja ime penale dukej e humbur para se të angazhoja Avokaten Vata. Falë aftësive të saj unike dhe dedikimit, dola i lirë. Jam mirënjohës përjetë.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">E</div>
+          <div class="testimonial-author-info">
+            <div class="testimonial-name">Erion B.</div>
+            <div class="testimonial-role">Çështje Penale — Tiranë</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-quote-mark">"</div>
+        <p class="testimonial-text">Divorci ishte periudha më e vështirë e jetës sime. Brisilda e trajtoi çështjen me takt, kujdes dhe profesionalizëm. Kujdestaria u vendos në favor tim.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">L</div>
+          <div class="testimonial-author-info">
+            <div class="testimonial-name">Lira Sh.</div>
+            <div class="testimonial-role">Divorc & Kujdestari — Tiranë</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-quote-mark">"</div>
+        <p class="testimonial-text">Çështja jonë e pronës kishte shumë komplikime ligjore. Avokate Vata i zgjidhi të gjitha dhe na dha të drejtën tonë. Rekomandim i plotë!</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">F</div>
+          <div class="testimonial-author-info">
+            <div class="testimonial-name">Fatmir D.</div>
+            <div class="testimonial-role">Çështje Pronësie — Tiranë</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-quote-mark">"</div>
+        <p class="testimonial-text">Ekspulsimi im u ndal falë ndërhyrjes së shpejtë dhe të mençur të Avokates Vata. Ajo punoi natë e ditë për çështjen time. Falenderim i pafund.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">V</div>
+          <div class="testimonial-author-info">
+            <div class="testimonial-name">Valon R.</div>
+            <div class="testimonial-role">Kundërshtim Ekspulsimi</div>
+          </div>
+        </div>
+      </div>
+      <!-- Clone for infinite scroll -->
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-quote-mark">"</div>
+        <p class="testimonial-text">Avokate Brisilda ma zgjidhi çështjen e lejes së qëndrimit kur mendoja se nuk kishte rrugë zgjidhje. Profesionalizmi dhe angazhimi i saj janë të pamatshëm.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">A</div>
+          <div class="testimonial-author-info">
+            <div class="testimonial-name">Artan M.</div>
+            <div class="testimonial-role">Leje Qëndrimi — Itali</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-quote-mark">"</div>
+        <p class="testimonial-text">Pas dy vitesh luftë ligjore, Brisilda e fitoi çështjen time të azilit. Nuk mund ta shprehë dot mirënjohjen time. Është avokate e jashtëzakonshme dhe njeri i mirë.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">M</div>
+          <div class="testimonial-author-info">
+            <div class="testimonial-name">Mira K.</div>
+            <div class="testimonial-role">Azil Politik — Gjermani</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-quote-mark">"</div>
+        <p class="testimonial-text">Çështja ime penale dukej e humbur para se të angazhoja Avokaten Vata. Falë aftësive të saj unike dhe dedikimit, dola i lirë. Jam mirënjohës përjetë.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">E</div>
+          <div class="testimonial-author-info">
+            <div class="testimonial-name">Erion B.</div>
+            <div class="testimonial-role">Çështje Penale — Tiranë</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-quote-mark">"</div>
+        <p class="testimonial-text">Divorci ishte periudha më e vështirë e jetës sime. Brisilda e trajtoi çështjen me takt, kujdes dhe profesionalizëm. Kujdestaria u vendos në favor tim.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">L</div>
+          <div class="testimonial-author-info">
+            <div class="testimonial-name">Lira Sh.</div>
+            <div class="testimonial-role">Divorc & Kujdestari — Tiranë</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-quote-mark">"</div>
+        <p class="testimonial-text">Çështja jonë e pronës kishte shumë komplikime ligjore. Avokate Vata i zgjidhi të gjitha dhe na dha të drejtën tonë. Rekomandim i plotë!</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">F</div>
+          <div class="testimonial-author-info">
+            <div class="testimonial-name">Fatmir D.</div>
+            <div class="testimonial-role">Çështje Pronësie — Tiranë</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <div class="testimonial-quote-mark">"</div>
+        <p class="testimonial-text">Ekspulsimi im u ndal falë ndërhyrjes së shpejtë dhe të mençur të Avokates Vata. Ajo punoi natë e ditë për çështjen time. Falenderim i pafund.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">V</div>
+          <div class="testimonial-author-info">
+            <div class="testimonial-name">Valon R.</div>
+            <div class="testimonial-role">Kundërshtim Ekspulsimi</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== WHY ==================== -->
+<!-- <section id="why">
+  <div class="section-container">
+    <div class="why-grid">
+      <div class="why-sticky">
+        <div class="reveal">
+          <div class="section-label">
+            <div class="section-label-line"></div>
+            <span class="section-label-text">Pse Ne</span>
+          </div>
+          <h2 class="section-heading">
+            Përse<br>
+            <em>zgjedhin</em><br>
+            klientët<br>
+            tonë.
+          </h2>
+        </div>
+        <div class="reveal" style="transition-delay:0.1s;margin-top:2rem">
+          <p style="font-size:0.8rem;color:var(--muted);line-height:1.9;font-weight:300">
+            Suksesi ynë ndërtohet mbi besimin e klientëve. Çdo tipar i shërbimit tonë është projektuar me kujdes për të ofruar eksperiencën juridike më të mirë të mundshme.
+          </p>
+        </div>
+      </div>
+      <div class="why-list">
+        <div class="why-item reveal">
+          <div class="why-item-num">01</div>
+          <div>
+            <div class="why-item-title">Ekspertizë e Specializuar</div>
+            <div class="why-item-text">15 vite eksperiencë intensive në fushat kryesore juridike. Jo gjeneralist — specialist i thellë i çdo domeni që trajtojmë, me njohuri të plota të legjislacionit shqiptar dhe ndërkombëtar.</div>
+          </div>
+        </div>
+        <div class="why-item reveal" style="transition-delay:0.05s">
+          <div class="why-item-num">02</div>
+          <div>
+            <div class="why-item-title">Disponueshmëri e Plotë</div>
+            <div class="why-item-text">Çështjet ligjore nuk presin. Jemi të disponueshëm 7 ditë në javë për urgjenca, dhe ofrojmë komunikim të vazhdueshëm nëpërmjet çdo kanali.</div>
+          </div>
+        </div>
+        <div class="why-item reveal" style="transition-delay:0.1s">
+          <div class="why-item-num">03</div>
+          <div>
+            <div class="why-item-title">Transparencë Totale</div>
+            <div class="why-item-text">Ju informojmë vazhdimisht për çdo zhvillim të çështjes suaj. Asnjë surprizë — as ligjore, as financiare. Tarifat janë të qarta dhe të negociueshme.</div>
+          </div>
+        </div>
+        <div class="why-item reveal" style="transition-delay:0.15s">
+          <div class="why-item-num">04</div>
+          <div>
+            <div class="why-item-title">Rrjet Ndërkombëtar</div>
+            <div class="why-item-text">Bashkëpunim i vendosur me avokatë dhe zyra juridike në Europë dhe SHBA, duke na mundësuar trajtimin efektiv të çështjeve ndërkombëtare.</div>
+          </div>
+        </div>
+        <div class="why-item reveal" style="transition-delay:0.2s">
+          <div class="why-item-num">05</div>
+          <div>
+            <div class="why-item-title">Qasja Personale</div>
+            <div class="why-item-text">Çdo klient merr vëmendje të plotë personale nga Avokate Brisilda Vata. Nuk jeni dosje — jeni person me histori unike dhe meritoni mbrojtje individuale.</div>
+          </div>
+        </div>
+        <div class="why-item reveal" style="transition-delay:0.25s">
+          <div class="why-item-num">06</div>
+          <div>
+            <div class="why-item-title">Lokacione Strategjike</div>
+            <div class="why-item-text">Dy zyra në Tiranë dhe Kamëz — Twin Towers në qendër dhe Bulevardin Nënë Tereza — për lehtësi maksimale aksesi nga çdo zonë.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<!-- ==================== CTA BAND ==================== -->
+<section id="cta-band">
+  <div class="cta-band-bg"></div>
+  <div class="section-container">
+    <div class="cta-band-content">
+      <h2 class="cta-band-title reveal">
+        Merrni drejtësinë<br>
+        që <em>meritoni.</em>
+      </h2>
+      <p class="cta-band-subtitle reveal" style="transition-delay:0.1s">Konsultimi i parë është falas dhe konfidencial. Kontaktoni sot.</p>
+      <div class="cta-band-buttons reveal" style="transition-delay:0.2s">
+        <a href="#contact" class="btn-primary"><span>Kontaktoni Tani</span></a>
+        <a href="tel:0683030508" class="cta-phone">
+          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+          0683 030 508
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FAQ ==================== -->
+<section id="faq">
+  <div class="section-container">
+    <div class="faq-grid">
+      <div>
+        <div class="reveal">
+          <div class="section-label">
+            <div class="section-label-line"></div>
+            <span class="section-label-text">Pyetjet</span>
+          </div>
+          <h2 class="section-heading">
+            Pyetje<br>
+            të shpeshta.
+          </h2>
+        </div>
+        <div class="reveal" style="transition-delay:0.1s;margin-top:2rem">
+          <p style="font-size:0.8rem;color:var(--muted);line-height:1.9;font-weight:300">
+            Nëse keni pyetje që nuk gjenden këtu, mos hezitoni të na kontaktoni drejtpërdrejt. Jemi këtu për t'ju ndihmuar.
+          </p>
+          <div style="margin-top:2rem">
+            <a href="#contact" class="btn-secondary">
+              <span class="btn-secondary-arrow"></span>
+              Na Shkruani
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="faq-list reveal" style="transition-delay:0.1s">
+        <div class="faq-item active">
+          <div class="faq-question">
+            <span class="faq-question-text">Si mund të filloj bashkëpunimin me zyrën tuaj?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-text">Mjafton të na kontaktoni me telefon ose email për të caktuar një takim konsultimi. Takimi fillestar është falas dhe konfidencial. Gjatë tij, vlerësojmë çështjen tuaj dhe ju japim mendimin tonë profesional.</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <span class="faq-question-text">Sa kushtojnë shërbimet juridike?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-text">Tarifat ndryshojnë sipas llojit dhe kompleksitetit të çështjes. Pas konsultimit fillestar, ju ofrojmë një kuotim të qartë dhe transparent pa kosto të fshehura. Ne besojmë në çmime të drejta dhe të negociueshme.</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <span class="faq-question-text">A mund të trajtoni çështje urgjente?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-text">Po, jemi plotësisht të disponueshëm për urgjenca ligjore. Urdhrat e ekspulsimit, arrestimet, masat e sigurimit — ne reagojmë me shpejtësi maksimale. Kontaktoni drejtpërdrejt në numrin tonë të telefonit.</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <span class="faq-question-text">A trajtoni çështje jashtë Tiranës?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-text">Po. Trajtojmë çështje në të gjithë Shqipërinë. Për çështjet ndërkombëtare, bashkëpunojmë me rrjetin tonë të avokatëve partner në Europë dhe SHBA.</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <span class="faq-question-text">Çfarë duhet të sjell në takimin e parë?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-text">Sjellni dokumentet kryesore të lidhura me çështjen tuaj (kontrata, vendime, korrespondencë etj.) dhe dokumentin tuaj të identitetit. Nëse nuk keni ende dokumenta, mund të vini edhe vetëm për një konsultim verbal fillestar.</div>
+          </div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">
+            <span class="faq-question-text">Sa kohë zgjat zakonisht një çështje ligjore?</span>
+            <span class="faq-toggle">+</span>
+          </div>
+          <div class="faq-answer">
+            <div class="faq-answer-text">Kohëzgjatja varet nga lloji i çështjes dhe kompleksiteti i saj. Çështjet administrative mund të zgjidhen brenda disa javësh, ndërsa ato gjyqësore mund të zgjasin muaj apo vite. Ju japim një vlerësim realist nga fillimi.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CONTACT ==================== -->
+<section id="contact">
+  <div class="contact-bg"></div>
+  <div class="section-container">
+    <div style="text-align:center;margin-bottom:5rem" class="reveal">
+      <div class="section-label" style="justify-content:center">
+        <div class="section-label-line"></div>
+        <span class="section-label-text">Na Kontaktoni</span>
+        <div class="section-label-line" style="transform:rotate(180deg)"></div>
+      </div>
+      <h2 class="section-heading" style="margin-top:1rem">
+        Hapni rrugën<br>
+        drejt <em>drejtësisë.</em>
+      </h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <div class="contact-item">
+          <div class="contact-item-icon">📞</div>
+          <div>
+            <div class="contact-item-label">Telefon</div>
+            <div class="contact-item-value"><a href="tel:0683030508" style="color:inherit;text-decoration:none">0683 030 508</a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">✉</div>
+          <div>
+            <div class="contact-item-label">Email</div>
+            <div class="contact-item-value"><a href="mailto:avokatebrisildavata@gmail.com" style="color:inherit;text-decoration:none;font-size:0.8rem">avokatebrisildavata@gmail.com</a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📍</div>
+          <div>
+            <div class="contact-item-label">Zyra 1 — Tiranë Qendër</div>
+            <div class="contact-item-value">Twin Towers<br>Bulevardi Dëshmorët e Kombit<br>Tiranë</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📍</div>
+          <div>
+            <div class="contact-item-label">Zyra 2 — Kamëz</div>
+            <div class="contact-item-value">Kati 1<br>Bulevardi Nënë Tereza<br>Kamëz, Tiranë</div>
+          </div>
+        </div>
+        <div style="padding-top:1rem">
+          <div style="font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:0.8rem">Orari i Punës</div>
+          <div style="font-size:0.82rem;color:var(--silver);line-height:1.8;font-weight:300">
+            E Hënë – E Premte: 09:00 – 18:00<br>
+            E Shtunë: 10:00 – 14:00<br>
+            <span style="color:var(--gold);font-size:0.72rem">Urgjenca: 24/7</span>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form reveal" style="transition-delay:0.15s">
+        <div class="contact-form-title">Dërgoni një mesazh</div>
+        <div class="contact-form-subtitle">Do t'ju kontaktojmë brenda 24 orëve. Konsultimi fillestar është falas.</div>
+        <form onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <div class="form-field">
+              <label class="form-label">Emri</label>
+              <input type="text" class="form-input" placeholder="Emri juaj">
+            </div>
+            <div class="form-field">
+              <label class="form-label">Mbiemri</label>
+              <input type="text" class="form-input" placeholder="Mbiemri juaj">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label class="form-label">Telefon</label>
+              <input type="tel" class="form-input" placeholder="+355 ...">
+            </div>
+            <div class="form-field">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-input" placeholder="email@tuaj.com">
+            </div>
+          </div>
+          <div class="form-field">
+            <label class="form-label">Fusha Juridike</label>
+            <select class="form-select">
+              <option value="">Zgjidhni fushën...</option>
+              <option>Emigracion / Leje Qëndrimi</option>
+              <option>Azil</option>
+              <option>Ekspulse / Deportim</option>
+              <option>Çështje Penale</option>
+              <option>Çështje Civile</option>
+              <option>Divorc & Kujdestari</option>
+              <option>Pension Familjar</option>
+              <option>Pronësi</option>
+              <option>Trashëgimi</option>
+              <option>Kontrata</option>
+              <option>Çështje Ndërkombëtare</option>
+              <option>Tjetër</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label class="form-label">Mesazhi juaj</label>
+            <textarea class="form-textarea" placeholder="Përshkruani shkurtimisht çështjen tuaj..."></textarea>
+          </div>
+          <button type="submit" class="form-submit">Dërgoni Mesazhin →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer>
+  <div class="section-container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">Avokate Brisilda Vata</div>
+        <span class="footer-brand-tag">Zyrë Avokature — Tiranë, Shqipëri</span>
+        <p class="footer-brand-desc">
+          Përfaqësim dhe këshillim ligjor elitar me profesionalizëm, korrektësi, diskrecion dhe përkushtim maksimal ndaj klientit.
+        </p>
+      </div>
+      <div>
+        <div class="footer-heading">Shërbimet</div>
+        <ul class="footer-links">
+          <li><a href="#services">Emigracion & Azil</a></li>
+          <li><a href="#services">Çështje Penale</a></li>
+          <li><a href="#services">Çështje Civile</a></li>
+          <li><a href="#services">Divorc & Familjar</a></li>
+          <li><a href="#services">Pronësi & Kontrata</a></li>
+          <li><a href="#services">Trashëgimi</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-heading">Navigimi</div>
+        <ul class="footer-links">
+          <li><a href="#about">Rreth Nesh</a></li>
+          <li><a href="#achievements">Sukseset</a></li>
+          <li><a href="#process">Procesi</a></li>
+          <li><a href="#testimonials">Klientët</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#contact">Kontakt</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-heading">Kontakt</div>
+        <ul class="footer-links">
+          <li><a href="tel:0683030508">0683 030 508</a></li>
+          <li><a href="mailto:avokatebrisildavata@gmail.com" style="font-size:0.68rem">avokatebrisildavata@gmail.com</a></li>
+          <li><a href="#">Twin Towers, Tiranë</a></li>
+          <li><a href="#">Blv. Nënë Tereza, Kamëz</a></li>
+        </ul>
+        <div style="margin-top:2rem;font-size:0.6rem;color:var(--muted);line-height:1.8;letter-spacing:0.05em">
+          E Hënë – E Premte<br>09:00 – 18:00
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 Avokate Brisilda Vata. Të gjitha të drejtat e rezervuara.</div>
+      <div class="footer-legal">
+        <a href="#">Politika e Privatësisë</a>
+        <a href="#">Kushtet e Shërbimit</a>
+        <a href="#">Konfidencialiteti</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ===== CURSOR =====
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx + 'px';
+  cursor.style.top = my + 'px';
+});
+
+function animateRing() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.left = rx + 'px';
+  ring.style.top = ry + 'px';
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+
+document.querySelectorAll('a,button,.service-card,.faq-item,.achievement-card,.why-item,.stat-item,.about-pillar,.testimonial-card').forEach(el => {
+  el.addEventListener('mouseenter', () => { cursor.classList.add('hovering'); ring.classList.add('hovering'); });
+  el.addEventListener('mouseleave', () => { cursor.classList.remove('hovering'); ring.classList.remove('hovering'); });
+});
+
+// ===== LOADER =====
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const loader = document.getElementById('loader');
+    loader.classList.add('fade-out');
+    setTimeout(() => loader.style.display = 'none', 800);
+  }, 2500);
+});
+
+// ===== NAVBAR =====
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// ===== MOBILE MENU =====
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+const mobileClose = document.getElementById('mobileClose');
+
+hamburger.addEventListener('click', () => mobileMenu.classList.add('open'));
+mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+function closeMobile() { mobileMenu.classList.remove('open'); }
+
+// ===== REVEAL ON SCROLL =====
+const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+revealEls.forEach(el => revealObserver.observe(el));
+
+// ===== COUNTERS =====
+const counters = document.querySelectorAll('.counter');
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !entry.target.dataset.done) {
+      entry.target.dataset.done = true;
+      const target = parseInt(entry.target.dataset.target);
+      const duration = 2000;
+      const step = target / (duration / 16);
+      let current = 0;
+      const timer = setInterval(() => {
+        current = Math.min(current + step, target);
+        entry.target.textContent = Math.floor(current);
+        if (current >= target) clearInterval(timer);
+      }, 16);
+    }
+  });
+}, { threshold: 0.5 });
+counters.forEach(c => counterObserver.observe(c));
+
+// ===== ACHIEVEMENT BARS =====
+const bars = document.querySelectorAll('.achievement-bar-fill');
+const barObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !entry.target.dataset.animated) {
+      entry.target.dataset.animated = true;
+      setTimeout(() => entry.target.classList.add('animated'), 300);
+    }
+  });
+}, { threshold: 0.5 });
+bars.forEach(b => barObserver.observe(b));
+
+// ===== FAQ =====
+document.querySelectorAll('.faq-item').forEach(item => {
+  item.querySelector('.faq-question').addEventListener('click', () => {
+    const isActive = item.classList.contains('active');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+    if (!isActive) item.classList.add('active');
+  });
+});
+
+// ===== PARALLAX HERO =====
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY;
+  const heroGrid = document.querySelector('.hero-grid');
+  if (heroGrid && scrolled < window.innerHeight) {
+    heroGrid.style.transform = `translateY(${scrolled * 0.3}px)`;
+  }
+  const heroBg = document.querySelector('.hero-bg');
+  if (heroBg && scrolled < window.innerHeight) {
+    heroBg.style.transform = `translateY(${scrolled * 0.15}px)`;
+  }
+});
+
+// ===== MAGNETIC BUTTONS =====
+document.querySelectorAll('.btn-primary, .nav-cta, .form-submit').forEach(btn => {
+  btn.addEventListener('mousemove', (e) => {
+    const rect = btn.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    btn.style.transform = `translate(${x * 0.15}px, ${y * 0.3}px)`;
+  });
+  btn.addEventListener('mouseleave', () => {
+    btn.style.transform = '';
+  });
+});
+
+// ===== FORM SUBMIT =====
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('.form-submit');
+  const orig = btn.textContent;
+  btn.textContent = 'Mesazhi u Dërgua ✓';
+  btn.style.background = 'linear-gradient(135deg, #4a7c59, #5d9e6e)';
+  setTimeout(() => {
+    btn.textContent = orig;
+    btn.style.background = '';
+    e.target.reset();
+  }, 3000);
+}
+
+// ===== SMOOTH ANCHOR =====
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const href = a.getAttribute('href');
+    if (href === '#') return;
+    const target = document.querySelector(href);
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+</script>
+</body>
+</html>

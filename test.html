@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+:root {
+  --black: #050505;
+  --deep: #0a0a0f;
+  --charcoal: #111118;
+  --surface: #141420;
+  --gold: #c9a84c;
+  --gold-light: #e8cc80;
+  --gold-dim: #8a6a2a;
+  --ivory: #f5f0e8;
+  --silver: #a8a8b8;
+  --muted: #4a4a5a;
+  --border: rgba(201,168,76,0.2);
+  --border-subtle: rgba(255,255,255,0.05);
+  --glow: rgba(201,168,76,0.15);
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-ui: 'Montserrat', sans-serif;
+  --font-accent: 'Playfair Display', Georgia, serif;
+}
+
+.section-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 4rem;
+}
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.9s cubic-bezier(0.22,1,0.36,1), transform 0.9s cubic-bezier(0.22,1,0.36,1);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-left { opacity: 0; transform: translateX(-50px); transition: opacity 0.9s ease, transform 0.9s ease; }
+.reveal-left.visible { opacity: 1; transform: translateX(0); }
+.reveal-right { opacity: 0; transform: translateX(50px); transition: opacity 0.9s ease, transform 0.9s ease; }
+.reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+.section-label-line {
+  width: 40px;
+  height: 1px;
+  background: var(--gold);
+}
+.section-label-text {
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.section-heading {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 300;
+  line-height: 1.05;
+  color: var(--ivory);
+}
+.section-heading em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+#about {
+  padding: 10rem 0;
+  background: linear-gradient(180deg, var(--black) 0%, var(--deep) 50%, var(--black) 100%);
+}
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8rem;
+  align-items: center;
+}
+.about-left .section-heading { margin-bottom: 2rem; }
+.about-description {
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: var(--silver);
+  line-height: 1.9;
+  margin-bottom: 1.5rem;
+}
+.about-signature {
+  font-family: var(--font-accent);
+  font-size: 2.5rem;
+  font-style: italic;
+  color: var(--gold);
+  margin-top: 2.5rem;
+  opacity: 0.8;
+}
+.about-right {
+  position: relative;
+}
+.about-visual {
+  width: 100%;
+  aspect-ratio: 4/5;
+  background: linear-gradient(135deg, var(--charcoal), var(--surface));
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.about-visual::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, rgba(201,168,76,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(201,168,76,0.1) 0%, transparent 50%);
+}
+.about-visual-inner {
+  position: absolute;
+  inset: 2rem;
+  border: 1px solid rgba(201,168,76,0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2.5rem;
+}
+.about-visual-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+  font-family: var(--font-display);
+  font-size: 10rem;
+  font-weight: 300;
+  color: rgba(201,168,76,0.05);
+  letter-spacing: -0.05em;
+  user-select: none;
+  line-height: 1;
+}
+.about-badge {
+  background: rgba(201,168,76,0.08);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+  padding: 1.5rem 2rem;
+  position: relative;
+}
+.about-badge-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: var(--gold);
+  margin-bottom: 0.3rem;
+}
+.about-badge-subtitle {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--silver);
+}
+.about-corner-badge {
+  position: absolute;
+  top: -1.5rem;
+  right: 2rem;
+  background: var(--gold);
+  color: var(--black);
+  padding: 0.4rem 1.2rem;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.about-pillars {
+  display: flex;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+.about-pillar {
+  flex: 1;
+  padding: 1.5rem;
+  border: 1px solid var(--border-subtle);
+  border-top: 1px solid var(--gold);
+  transition: border-color 0.3s ease, background 0.3s ease;
+}
+.about-pillar:hover {
+  background: rgba(201,168,76,0.03);
+  border-top-color: var(--gold-light);
+}
+.about-pillar-num {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--gold);
+  font-weight: 300;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+.about-pillar-title {
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ivory);
+  margin-bottom: 0.4rem;
+}
+.about-pillar-text {
+  font-size: 0.72rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+@media (max-width: 700px) {
+  .about-pillars {
+    flex-direction: column;
+  }
+}
+    </style>
+</head>
+<body>
+<!-- ==================== ABOUT ==================== -->
+<section id="about">
+  <div class="section-container">
+    <div class="about-grid">
+      <div class="about-left">
+        <div class="reveal">
+          <div class="section-label">
+            <div class="section-label-line"></div>
+            <span class="section-label-text">Kush Jemi</span>
+          </div>
+          <h2 class="section-heading">
+            Angazhim i<br>
+            <em>plotë</em> ndaj<br>
+            klientit.
+          </h2>
+        </div>
+        <div class="reveal" style="transition-delay:0.1s">
+          <p class="about-description">
+            Avokate Brisilda Vata sjell në çdo çështje një kombinim unik të njohurive juridike të thella, eksperiencës ndërkombëtare dhe dedikimit të plotë ndaj klientit. Çdo rast trajtohet me seriozitetin maksimal.
+          </p>
+          <p class="about-description">
+            Me fokus të veçantë në çështjet e emigracionit, çështjet ndërkombëtare, civile dhe penale, zyra jonë ofron një shërbim 360 gradë — nga këshillimi fillestar deri tek përfaqësimi në gjykatë.
+          </p>
+          <p class="about-description">
+            Diskrecioni, integriteti dhe rezultati janë vlerat tona themelore. Klientët tanë nuk janë numra — janë njerëz me histori dhe të drejta që meritojnë mbrojtje reale.
+          </p>
+          <div class="about-signature">Brisilda Vata</div>
+        </div>
+        <div class="about-pillars reveal" style="transition-delay:0.2s">
+          <div class="about-pillar">
+            <div class="about-pillar-num">01</div>
+            <div class="about-pillar-title">Diskrecion</div>
+            <div class="about-pillar-text">Konfidencialiteti absolut në çdo çështje.</div>
+          </div>
+          <div class="about-pillar">
+            <div class="about-pillar-num">02</div>
+            <div class="about-pillar-title">Integritet</div>
+            <div class="about-pillar-text">Etika profesionale e patëmetë.</div>
+          </div>
+          <div class="about-pillar">
+            <div class="about-pillar-num">03</div>
+            <div class="about-pillar-title">Rezultat</div>
+            <div class="about-pillar-text">Fokus i qartë tek fitorja e klientit.</div>
+          </div>
+        </div>
+      </div>
+      <div class="about-right reveal-right">
+        <div class="about-visual">
+          <div class="about-visual-icon">⚖</div>
+          <div class="about-visual-inner">
+            <div class="about-corner-badge">Avokate</div>
+            <div class="about-badge">
+              <div class="about-badge-title">Brisilda Vata</div>
+              <div class="about-badge-subtitle">Avokate — Bari i Shqipërisë · Tiranë</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+revealEls.forEach(el => revealObserver.observe(el));</script>
+</body>
+</html>
